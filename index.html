@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Դպրոցների կառուցապատման քարտեզ | Արագածոտն</title>
+<title>Դպրոցների քարտեզ | Կրթական ենթակառուցվածքներ</title>
 <meta name="description" content="Հայաստանի դպրոցների շինարարության, վերանորոգման և կառուցապատման ինտերակտիվ քարտեզ">
 
 <link rel="preconnect" href="https://unpkg.com">
@@ -21,13 +21,16 @@
   <!-- ===== Header ===== -->
   <header class="topbar">
     <div class="topbar__brand">
-      <span class="topbar__logo" aria-hidden="true">🏫</span>
+      <button id="homeMap" class="topbar__logo" type="button" aria-label="Վերադառնալ քարտեզին" title="Քարտեզ"><svg class="icon" viewBox="0 0 24 24"><path d="m3 10 9-6 9 6M5 9v11h14V9M9 20v-6h6v6M12 2v2M3 20h18"/></svg></button>
       <div class="topbar__titles">
-        <h1>Դպրոցների կառուցապատման քարտեզ</h1>
-        <p>Ինտերակտիվ քարտեզ՝ դպրոցների կառուցման, վերանորոգման և վերակառուցման ծրագրերի մասին</p>
+        <h1>Դպրոցաշինության դիտարկում</h1>
+        <p>Կրթական ենթակառուցվածքներ · Հայաստան</p>
       </div>
     </div>
     <div class="topbar__actions">
+      <button id="overviewToggle" class="utility-btn" aria-expanded="false" aria-controls="programOverview">Ծրագրի մասին</button>
+      <button id="presentationToggle" class="utility-btn" aria-pressed="false">Ներկայացման ռեժիմ</button>
+      <button id="printSummary" class="utility-btn">Տպել ամփոփագիրը</button>
       <button id="themeToggle" class="icon-btn" title="Փոխել տեսքը" aria-label="Փոխել լուսավոր/մուգ տեսքը">
         <svg class="icon icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
         <svg class="icon icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -38,43 +41,60 @@
     </div>
   </header>
 
+  <section class="intro" id="programOverview">
+    <div><div class="eyebrow">ԿՐԹԱԿԱՆ ԵՆԹԱԿԱՌՈՒՑՎԱԾՔՆԵՐԻ ԱՏԼԱՍ</div>
+    <h2>Դպրոցաշինության ծրագրերի<br><span>ամփոփ պատկեր</span></h2>
+    <p class="intro-purpose">Դպրոցաշինության ծրագրերի աշխարհագրությունը, ընթացքը և ընդգրկումը՝ մեկ հարթակում։</p>
+    <p id="datasetScope">Բեռնվում է տվյալների ընդգրկումը…</p>
+    <p class="data-date">Տվյալների թարմացման ամսաթիվը աղբյուրում նշված չէ։</p></div>
+    <svg class="atlas-art" viewBox="0 0 420 260" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-width="1"><path opacity=".2" d="M0 200 210 80 420 200M0 230 210 110 420 230M40 260 250 140M0 170 160 260M100 120 340 260M180 80 420 220"/><path d="m70 150 135-77 145 82-135 78Z"/><path d="M70 150v-44l135-77 145 82v44M205 29v44M215 189v44M70 106l145 83 135-78"/><path d="m110 108 35-20 31 18-35 20Zm55-32 35-20 31 18-35 20Zm70 40 35-20 31 18-35 20Z"/><path d="M105 168v-29l22 13v29m24 14v-29l22 13v29m65-1v-29l23-13v29m24-14v-29l23-13v29"/></g><g fill="#8ce0ca"><circle cx="70" cy="150" r="4"/><circle cx="205" cy="29" r="4"/><circle cx="350" cy="155" r="4"/><circle cx="215" cy="233" r="4"/></g></svg>
+    <button id="exportCsv" class="action-btn" disabled><span aria-hidden="true">↓</span> Ներբեռնել ցանկը</button>
+  </section>
+
   <!-- ===== Stat tiles ===== -->
   <section class="stats" id="stats" aria-label="Ամփոփ վիճակագրություն">
     <div class="stat-tile" style="--d:0ms">
-      <div class="stat-tile__icon">🏫</div>
+      <div class="stat-tile__icon" aria-hidden="true">▦</div>
       <div class="stat-tile__body">
         <div class="stat-tile__value" data-count="0" id="statTotal">0</div>
-        <div class="stat-tile__label">Դպրոց</div>
+        <div class="stat-tile__label">Ընդգրկված դպրոցներ</div>
+        <p class="stat-context">Ըստ ընտրված զտիչների</p>
       </div>
     </div>
     <div class="stat-tile" style="--d:60ms">
-      <div class="stat-tile__icon">🧑‍🎓</div>
+      <div class="stat-tile__icon" aria-hidden="true">♙</div>
       <div class="stat-tile__body">
         <div class="stat-tile__value" data-count="0" id="statStudents">0</div>
         <div class="stat-tile__label">Աշակերտ</div>
+        <p class="stat-context">Բազայում գրանցված աշակերտների թիվը</p>
       </div>
     </div>
     <div class="stat-tile" style="--d:120ms">
-      <div class="stat-tile__icon">📐</div>
+      <div class="stat-tile__icon" aria-hidden="true">⌑</div>
       <div class="stat-tile__body">
-        <div class="stat-tile__value" data-count="0" id="statArea">0</div>
-        <div class="stat-tile__label">մ² կառուցապատում</div>
+        <div class="stat-tile__value" data-count="0" id="statCompleted">0</div>
+        <div class="stat-tile__label">Ավարտված ծրագրեր</div>
+        <p class="stat-context" id="completionShare">—</p>
       </div>
     </div>
     <div class="stat-tile stat-tile--wide" style="--d:180ms">
       <div class="stat-tile__body stat-tile__body--full">
-        <div class="stat-tile__label">Կարգավիճակի բաշխում</div>
-        <div class="status-bar" id="statusBar" role="img" aria-label="Կարգավիճակի բաշխման գծապատկեր"></div>
-        <div class="status-bar-legend" id="statusBarLegend"></div>
+        <div class="stat-tile__value" data-count="0" id="statOngoing">0</div>
+        <div class="stat-tile__label">Ընթացիկ ծրագրեր</div>
+        <p class="stat-context">Ըստ աղբյուրի կարգավիճակի</p>
       </div>
     </div>
   </section>
+
+  <section class="portfolio-strip" aria-label="Ծրագրերի կարգավիճակների ամփոփում"><div class="portfolio-strip__heading"><span class="section-index">01 / ԸՆԴՀԱՆՈՒՐ ՊԱՏԿԵՐ</span><span>Ըստ ընտրված դպրոցների</span></div><div id="portfolioOverview"></div></section>
+  <details class="data-about"><summary>Տվյալների մասին և ցուցանիշների մեկնաբանություն</summary><div class="data-about__body"><p><strong>Աղբյուր՝</strong> տրամադրված schools.geojson բազա։ Ընդգրկումը նշված է էջի վերնամասում․ այն ամբողջ Հայաստանի դպրոցների հաշվառումը չէ։</p><p><strong>Թարմացման ամսաթիվ և հաստատող կառույց՝</strong> աղբյուրում նշված չեն։ Սա արդիականության հաստատում չէ։</p><p><strong>Կարգավիճակները՝</strong> ներկայացված են աղբյուրի դասակարգմամբ։ «Անհայտ» նշանակում է, որ կարգավիճակը նշված չէ։ Դրանց սահմանման և հաստատման մեթոդաբանությունը տրամադրված չէ։</p><p><strong>Տոկոսները՝</strong> ընտրված դպրոցների քանակի մասնաբաժիններն են, ոչ շինարարական աշխատանքների կատարման տոկոսը։ Աշակերտների թիվը բազայի ցուցանիշ է, ոչ հաստատված շահառուների գնահատում։</p></div></details>
 
   <!-- ===== Main layout ===== -->
   <div class="layout">
 
     <aside class="sidebar" id="sidebar">
       <div class="sidebar__scroll">
+        <div class="sidebar-heading"><h2>Զտիչներ</h2><button id="sidebarClose" class="icon-btn icon-btn--mobile" aria-label="Փակել զտիչները">×</button></div>
 
         <div class="filter-group">
           <label class="filter-group__label" for="searchInput">Որոնում</label>
@@ -115,8 +135,8 @@
           <div class="range-slider" id="capacitySlider">
             <div class="range-slider__track"></div>
             <div class="range-slider__range"></div>
-            <input type="range" id="capacityMin" min="0" max="1000" value="0">
-            <input type="range" id="capacityMax" min="0" max="1000" value="1000">
+            <input type="range" id="capacityMin" aria-label="Աշակերտների նվազագույն թիվ" min="0" max="1000" value="0">
+            <input type="range" id="capacityMax" aria-label="Աշակերտների առավելագույն թիվ" min="0" max="1000" value="1000">
           </div>
         </div>
 
@@ -128,21 +148,35 @@
 
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-    <main class="map-wrap">
+    <main class="workspace">
+      <div id="viewTransition" class="view-transition" hidden aria-hidden="true"><div class="school-build"><svg viewBox="0 0 240 180" fill="none"><ellipse cx="120" cy="162" rx="94" ry="8" fill="currentColor" opacity=".07"/><path class="build-foundation" d="M25 151h190"/><path class="build-walls" d="M45 147V78h150v69"/><path class="build-roof" d="m30 78 90-49 90 49Z"/><g class="build-windows"><path d="M61 96h20v22H61Zm98 0h20v22h-20ZM91 96h18v22H91Zm40 0h18v22h-18Z"/></g><path class="build-door" d="M106 149v-24h28v24"/><g class="build-flag"><path d="M120 29V8m0 1h26l-6 8 6 8h-26"/></g><g class="build-crew"><g class="worker worker-carrier"><circle cx="20" cy="119" r="5"/><path class="worker-helmet" d="M13 117h14m-12 0a5 5 0 0 1 10 0"/><path class="worker-body" d="M20 125v15m0-10 8 5 7-5"/><g class="worker-legs"><path d="m20 140-6 13m6-13 7 13"/></g><path class="worker-brick" d="M29 123h11v7H29Z"/></g><g class="worker worker-mason"><circle cx="66" cy="121" r="5"/><path class="worker-helmet" d="M59 119h14m-12 0a5 5 0 0 1 10 0"/><path class="worker-body" d="M66 127v15m0 0-6 12m6-12 7 12"/><g class="worker-arm"><path d="m66 130 9 4 7-8m-3-1 9-3-3 7Z"/></g><path class="brick-stack" d="M83 142h18v9H83Zm5-9h18v9H88Z"/></g><g class="worker-ladder"><path d="m201 151 10-66m4 66 10-66m-22 13h14m-16 12h14m-16 12h14m-16 12h14m-16 12h14"/></g><g class="worker worker-roofer"><circle cx="215" cy="65" r="5"/><path class="worker-helmet" d="M208 63h14m-12 0a5 5 0 0 1 10 0"/><path class="worker-body" d="M215 71v14m0 0-7 11m7-11 5 12"/><g class="roofer-arm"><path d="m215 75-10 2-8-9m-3-3 8-3m-5 6-2-6"/></g></g></g></svg><span>Բացվում է բաժինը…</span><div class="build-progress"></div></div></div>
+      <div class="workspace-toolbar"><div class="view-switch" aria-label="Ցուցադրման եղանակ"><button id="mapView" class="selected" aria-pressed="true" aria-controls="mapPanel">Քարտեզ</button><button id="analysisView" aria-pressed="false" aria-controls="analysisPanel">Վերլուծություն</button><button id="listView" aria-pressed="false" aria-controls="listPanel">Դպրոցների ցանկ</button></div><span id="visibleCount" role="status"></span><button id="filtersToggle" class="text-btn" aria-expanded="true" aria-controls="sidebar">Զտիչներ</button><button id="fitBounds" class="text-btn">⌖ Բոլոր արդյունքները</button></div>
+      <div class="analysis-return"><button id="backToAnalysis" class="text-btn" hidden>← Վերադառնալ վերլուծությանը</button></div>
+      <div id="filterSummary" class="filter-summary" role="status"></div>
+      <div id="activeFilters" class="active-filters" aria-label="Կիրառված զտիչներ"></div>
+      <div class="map-wrap" id="mapPanel">
       <div id="map"></div>
+      <div class="map-caption"><span class="live-dot"></span> Դպրոցների աշխարհագրություն</div>
+      <div class="map-empty" id="mapEmpty" hidden>Դպրոցներ չեն գտնվել։ Փոխեք կամ զրոյացրեք զտիչները։</div>
       <div class="map-loading" id="mapLoading">
         <div class="spinner"></div>
         <span>Բեռնվում է...</span>
       </div>
+      </div>
+      <section id="analysisPanel" class="list-panel" hidden aria-label="Ծրագրերի վերլուծություն"><div class="list-heading"><h2>Ծրագրերի վերլուծություն</h2><span class="analysis-hint">Սեղմեք կարգավիճակը կամ մարզը՝ ցանկը զտելու համար։</span></div><div id="analysisContent"></div></section>
+      <section id="listPanel" class="list-panel" hidden aria-label="Դպրոցների ցանկ"><div class="list-heading"><h2>Դպրոցների ցանկ</h2><label for="sortSchools">Դասավորել <select id="sortSchools" class="select"><option value="name">Ըստ անվան</option><option value="students">Ըստ աշակերտների թվի</option><option value="status">Ըստ կարգավիճակի</option></select></label></div><div id="schoolList" class="school-list"></div></section>
+      <div class="workspace-note"><span>Ընտրեք դպրոցը՝ մանրամասները տեսնելու համար։</span><span>Ցուցանիշները՝ ըստ ընտրված զտիչների</span></div>
     </main>
+    <aside id="schoolDetails" class="school-details" hidden aria-label="Դպրոցի մանրամասներ"><div class="details-top"><span>Դպրոցի տվյալները</span><button id="detailsClose" class="icon-btn" aria-label="Փակել դպրոցի մանրամասները">×</button></div><div id="detailsContent"></div></aside>
   </div>
 
   <footer class="footer">
-    <span>Տվյալների աղբյուր՝ Shool_Web_GEO.geojson · Կառուցվել է Claude Code-ով</span>
+    <span>Ներկայացված է բազայում ներառված դպրոցների ընդգրկումը։</span><span>Աղբյուր՝ data/schools.geojson · Թարմացման ամսաթիվը նշված չէ</span>
   </footer>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status"></div>
+<section id="printReport" class="print-report" aria-label="Տպման ամփոփագիր"></section>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
